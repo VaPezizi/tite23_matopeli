@@ -1,3 +1,4 @@
+
 import sys
 import random
 from PySide6.QtWidgets import QApplication, QGraphicsView, QGraphicsScene, QMenu
@@ -152,4 +153,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
