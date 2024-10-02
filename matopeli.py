@@ -26,11 +26,28 @@ class SnakeGame(QGraphicsView):
         self.timer.timeout.connect(self.update_game)
 
     def init_screen(self):
+                
+        self.game_started = False
+        self.setScene(QGraphicsScene(self))
+        self.setRenderHint(QPainter.Antialiasing)
+        self.setSceneRect(0, 0, CELL_SIZE * GRID_WIDTH, CELL_SIZE * GRID_HEIGHT)
+
         start_text = self.scene().addText("Press any key to start", QFont("Arial", 18))
         text_width = start_text.boundingRect().width()
         text_x = (self.width() - text_width) / 5
         start_text.setPos(text_x, GRID_HEIGHT * CELL_SIZE / 2)
 
+    def end_screen(self):
+                
+        self.game_started = False
+        self.setScene(QGraphicsScene(self))
+        self.setRenderHint(QPainter.Antialiasing)
+        self.setSceneRect(0, 0, CELL_SIZE * GRID_WIDTH, CELL_SIZE * GRID_HEIGHT)
+
+        start_text = self.scene().addText("GAME OVER, PRESS ANY KEY TO START :DDDDDD", QFont("Arial", 18))
+        text_width = start_text.boundingRect().width()
+        text_x = (self.width() - text_width) / 5
+        start_text.setPos(text_x, GRID_HEIGHT * CELL_SIZE / 2)
     def keyPressEvent(self, event):
         key = event.key()
         # starting game by button
@@ -65,12 +82,12 @@ class SnakeGame(QGraphicsView):
 
         # Tarkistetaan törmäys pelikentän reunoihin
         if new_head[0] < 0 or new_head[0] >= GRID_WIDTH or new_head[1] < 0 or new_head[1] >= GRID_HEIGHT:
-            self.timer.stop()  # Pysäytetään peli, jos törmätään reunaan
+            self.end_screen()
             return
 
         # Tarkistetaan törmäys itseensä
         if new_head in self.snake:
-            self.timer.stop()  # Pysäytetään peli, jos käärme törmää itseensä
+            self.end_screen() # Pysäytetään peli, jos käärme törmää itseensä
             return
 
         self.snake.insert(0, new_head)
