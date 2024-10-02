@@ -60,6 +60,20 @@ class SnakeGame(QGraphicsView):
         if(self.food in self.snake):
             self.score = self.score + 1
             self.food = self.spawn_food()
+            self.addPiece()
+    
+    def addPiece(self):
+
+        if self.direction == Qt.Key_Left:
+            new_tail = (self.snake[-1][0] + 1, self.snake[-1][1])
+        elif self.direction == Qt.Key_Right:
+            new_tail = (self.snake[-1][0] - 1, self.snake[-1][1])
+        elif self.direction == Qt.Key_Up:
+            new_tail = (self.snake[-1][0] + 1, self.snake[-1][1])
+        elif self.direction == Qt.Key_Down:
+            new_tail = (self.snake[-1][0] - 1, self.snake[-1][1])
+
+        self.snake.append(new_tail) 
 
     def rainbow(self): ## lisätty RGB
         r = random.randrange(0, 255+1)
